@@ -1,0 +1,20 @@
+Celem jest poprawa efektywności czasowej lokalnego przeszukiwania w wersji stromej (steepest) z ruchem wymiany krawędzi.
+
+Stosujemy dwa mechanizmy:
+
+    Wykorzystanie ocen ruchów z poprzednich iteracji z uporządkowaną listą ruchów.
+    Ruchy kandydackie. 
+
+Mechanizmy te stosujemy oddzielnie, czyli implementujemy dwie różne wersje lokalnego przeszukiwania. Opcjonalnie można zaimplementować trzecią wersję łączącą oba te mechanizmy.
+
+Jako kandydackie stosujemy ruchy wprowadzające do rozwiązania co najmniej jedną krawędź kandydacką. Krawędzie kandydackie definiujemy wyznaczając dla każdego wierzchołka 5 innych najbliższych wierzchołków.
+
+Stosujemy większe instancje kroa200 i krob200.
+
+Jako punkt odniesienia uruchamiamy też lokalne przeszukiwanie w wersji stromej bez powyższych mechanizmów.
+
+Każdy z trzech algorytmów na każdej instancji uruchamiany 100 razy startując z rozwiązań losowych i raportujemy wartości min, max i średnią dla funkcji celu i czasu. Wszystkie wyniki zbieramy w jednej tabeli. 
+
+Jako punkt odniesienia porównujemy z najlepszym algorytmem z zadania 1 (heurystyką konstrukcyjną).
+
+Poza tym zawartość sprawozdania podobnie jako poprzednio. Pseudokody algorytmów, wyniki liczbowe i wizualizacje najlepszych rozwiązań, wnioski, link do kodu.  

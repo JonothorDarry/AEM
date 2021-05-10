@@ -1,0 +1,197 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{pdflscape}
+\usepackage{lmodern}
+\usepackage[a4paper,bindingoffset=0.2in,%
+left=0.5in,right=0.5in,top=0.5in,bottom=1in,%
+footskip=.25in]{geometry}
+\usepackage[colorlinks=true, linkcolor=Black, urlcolor=Blue]{hyperref}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{amsmath}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+
+\makeatletter
+\def\BState{\State\hskip-\ALG@thistlm}
+\makeatother
+\usepackage{listings}
+\usepackage{color}
+\usepackage[table]{xcolor}
+\definecolor{lightgray}{gray}{0.9}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=left,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=2
+}
+\usepackage{svg}
+
+
+\begin{document}
+	\title{Sprawozdanie z zadania 1.\\
+		\large Metody Inteligencji Sztucznej i Obliczeniowej\\
+		\large Sebastian Michoń 136770}
+	\date{\vspace{-10ex}}
+	\maketitle
+	\section{Problem}
+	\begin{enumerate}
+		\item Danych jest \(n\) punktów na płaszczyźnie.
+		\item Punkty te będą traktowane jako wierzchołki w grafie, pomiędzy każdą parą wierzchołków istnieje krawędź, waga krawędzi między wierzchołkami \((x;y)\) jest zdefiniowana jako odległość pomiędzy tymi punktami w przestrzeni euklidesowej.
+		\item Celem zadania jest znalezienie ścieżki zamkniętej przechodzącej przez \(\lceil \frac{n}{2} \rceil\) punktów minimalizującej sumę odległości pomiędzy kolejnymi parami wierzchołków w tej ścieżce.
+		\item Problem należy rozwiązać heurystykami zachłannymi i heurystykami z żalem.
+	\end{enumerate}
+	
+	\section{Pseudokod}
+	\begin{algorithm}
+		\caption{Trzy heurystyki - głowna funkcja}\label{erste}
+		\begin{algorithmic}[1]
+			\Procedure{General\_heuristic}{start\_vertex, matrix, Heuristic} 
+			\State{}
+			\Comment{Heuristic - wykorzystywana heurystyka}
+			\State $\textit{no\_vertexes} \gets \textit{matrix.size[0]}$
+			\State $\textit{pathway\_final\_len} \gets \textit{\(\lceil \frac{no\_vertexes}{2} \rceil \)}$
+			\State $\textit{pathway} \gets \textit{[start\_vertex]}$
+			\State $\textit{checked} \gets \textit{ARRAY[0..no\_vertices]}$
+			
+			\State $\textit{i} \gets \textit{0}$
+			\While {\(i < no\_vertices\)} \Comment{indeksowanie od 0}
+			\State $\textit{checked[i]} \gets \textit{false}$
+			\State $\textit{i} \gets \textit{i+1}$
+			\EndWhile
+			
+			\State $\textit{i} \gets \textit{1}$
+			\While {\(i < pathway\_final\_len\)}
+			\While {\(j < no\_vertices\)}
+			\If{checked[j] is true}
+			\State {Continue;}
+			\EndIf
+			\State $\textit{vertex\_to\_insert} \gets \textit{-1}$
+			\State $\textit{best\_cost} \gets \textit{\(\infty\)}$
+			\State $\textit{vertex\_to\_insert, best\_cost, place\_to\_insert} \gets$
+			\State $\textit{   Heuristic(vertex\_to\_insert, best\_cost, place\_to\_insert,  pathway, matrix, j)}$
+			
+			\State $\textit{place\_to\_insert} \gets \textit{-1}$
+			
+			\State $\textit{j} \gets \textit{j+1}$
+			\EndWhile
+			\State $\textit{check[vertex\_to\_insert]} \gets \textit{true}$
+			\State insert\_to\_sequence($vertex\_to\_insert$ into $pathway$, on index $place\_to\_insert$)
+			\State $\textit{i} \gets \textit{i+1}$
+			\EndWhile
+			
+			\EndProcedure
+		\end{algorithmic}
+	\end{algorithm}
+	
+	\begin{algorithm}
+		\caption{Heurystyka I: zachłanna}\label{zweite}
+		\begin{algorithmic}[1]
+			\Procedure{Greedy\_heuristic}{old\_vertex, old\_cost, old\_place, path, matrix, vertex}
+			\If {$old\_cost>matrix[path[path.size-1]][vertex]$}
+			\State {}
+			\Return {$vertex, matrix[path[path.size-1]][vertex], path.size$}
+			\EndIf
+			\Return {old\_vertex, old\_cost, old\_place}
+			\EndProcedure
+		\end{algorithmic}
+	\end{algorithm}
+	
+	\begin{algorithm}
+		\caption{Heurystyka II: zachłanna z cyklem}\label{dritte}
+		\begin{algorithmic}[1]
+			\Procedure{Cycle\_heuristic}{old\_vertex, old\_cost, old\_place, path, matrix, vertex}
+			\If {$old\_cost>matrix[path[path.size-1]][vertex]+matrix[path[0]][vertex]$}
+			\State {}
+			\Return {$vertex, matrix[path[path.size-1]][vertex]+matrix[path[0]][vertex], path.size$}
+			\EndIf
+			\Return {old\_vertex, old\_cost, old\_place}
+			\EndProcedure
+		\end{algorithmic}
+	\end{algorithm}
+	
+	\begin{algorithm}
+		\caption{Heurystyka III: 2-żal}\label{vierte}
+		\begin{algorithmic}[1]
+			\Procedure{2Regret\_heuristic}{old\_vertex, old\_cost, old\_place, path, matrix, vertex}
+			\State $\textit{regrets} \gets \textit{empty\_sequence}$
+			\State $\textit{i} \gets \textit{0}$
+			
+			\While {\(i < pathway\_final\_len\)}
+			\State $\textit{v1} \gets \textit{path[i]}$
+			\State $\textit{v2} \gets \textit{path[(i+1)\%path.size]}$
+			\State append\_to\_sequence($(matrix[v1][j]+matrix[v2][j]-matrix[v1][v2], i)$ to $regrets$)
+			\State $\textit{i} \gets \textit{i+1}$
+			\EndWhile
+			\State sort $regrets$ by first element
+			\State $\textit{sum\_of\_regrets} \gets \textit{-3*regrets[0][0]}$ \Comment{Stałą wytłumaczono we wnioskach}
+			\State $\textit{sum\_of\_regrets} \gets \textit{sum\_of\_regrets+regrets[1][0]+regrets[2][0]}$
+			\State{}
+			\If {$old\_cost > sum\_of\_regrets$}
+			\State {}
+			\Return {$old\_vertex, old\_cost, old\_place$}
+			\EndIf
+			\Return {$vertex, sum\_of\_regrets, regrets[1][0]+1$}
+			\EndProcedure
+		\end{algorithmic}
+	\end{algorithm}
+	\clearpage
+	
+	\begin{figure}[h!]
+		\section{Rozwiązania generowane przez algorytm}
+		\scalebox{.8}{
+			\begin{subfigure}[ba]{1\linewidth}
+				\includesvg[width=\linewidth]{heury.svg}
+				\caption{Rozwiązania generowane przez algorytm}
+			\end{subfigure}
+		}
+	\end{figure}
+	\clearpage
+	
+	\section{Wartości rozwiązań}
+	\captionof{table}{Efektywność poszczególnych heurystyk}
+	\begin{tabular}{| l | l | l | l | l |}
+		\rowcolor{gray!50}
+		\hline
+		instancja & algorytm & minimum & średnia & maksimum\\ \hline
+		kroA100.tsp & zachłanny & 10298 & 12769.62 & 14877 \\ \hline
+		kroA100.tsp & zachłanny z cyklem & 12308 & 14465.64 & 18139 \\ \hline
+		kroA100.tsp & z 2-żalem - wersja 1 & 15042 & 16184.5 & 17235 \\ \hline
+		kroA100.tsp & z 2-żalem - wersja 2 & 10450 & 11887.5 & 13625 \\ \hline
+		kroB100.tsp & zachłanny & 10638 & 13521.32 & 15745 \\ \hline
+		kroB100.tsp & zachłanny z cyklem & 10417 & 14148.32 & 20202 \\ \hline
+		kroB100.tsp & z 2-żalem - wersja 1 & 14645 & 15672.8 & 16688 \\ \hline
+		kroB100.tsp & z 2-żalem - wersja 2 & 9629 & 11346.46 & 13109 \\ \hline
+		
+	\end{tabular}
+	
+	\section{Wnioski}
+	\begin{enumerate}
+		\item Standardowy algorytm z 2-żalem zwracał niesatysfakcjonujące rezultaty, średnio zawsze najgorsze ze wszystkich algorytmów, na 1 z instancji najgorsze wyniki algorytmu zachłannego były lepsze niż najlepsze wyniki algorytmu z 2-żalem - wynika to zapewne z tego, że algorytm ten wybierał wierzchołek taki, że jego potencjalny wybór w przyszłości mógłby być wiele mniej opłacalny niż jest teraz; innymi słowy, wybierał wierzchołek zakładając, że on kiedyś zostanie wybrany nie uwzględniając tego, że ścieżka nie składa się ze wszystkich dostępnych wierzchołków.
+		\item Ulepszony algorytm z 2-żalem odejmował od żalu naniższą możliwą wartość wzrostu odległości po dodaniu wierzchołka do ścieżki - w ten sposób maksymalny żal uwzględniał nie tylko utratę możliwości wstawienia wierzchołka w satysfakcjonujące miejsce, ale też dążył do minimalnego wzrostu długości ścieżki zamkniętej; rezultaty były średnio lepsze niż dla wszystkich pozostałych algorytmów na obu instancjach, dla instancji \textit{kroB100.tsp} najgorszy wynik tego algorytmu był lepszy niż wynik średni dla wszystkich pozostałych algorytmów.
+		\item Algorytm zachłanny uzyskiwał średnio 2. najlepsze rezultaty na obu instancjach, gorsze od ulepszonej wersji algorytmu z 2-żalem, lepsze od algorytmu zachłannego tworzącego cykl. Standardowy algorytm zachłanny wybierał ścieżkę bez optymalizacji jej długości tylko raz - dla krawędzi łączącej ostatni i pierwszy wierzchołek. W przeciwieństwie do niego, algorytm zachłąnny tworzący cykl mógł wybrać taką ścieżkę wielokrotnie, ponieważ wybierał on wierzchołki, które leżą w okolicach odcinka łączącego obecnie pierwszy z obecnie ostatnim wierzchołkiem na ścieżce.
+	\end{enumerate}
+	Link do kodu: \color{blue} \href{https://algos.herokuapp.com}{algos.herokuapp.com}\color{black}
+	
+\end{document} 
