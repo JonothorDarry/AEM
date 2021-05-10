@@ -1,0 +1,19 @@
+Zadanie polega na implementacji lokalnego przeszukiwania w wersjach stromej (steepest) i zachłannej (greedy) z dwoma różnym rodzajami sąsiedztwa. W sumie 4 kombinacje - wersje lokalnego przeszukiwania.
+
+Sąsiedztwa
+
+W naszym przypadku będą potrzebne dwa typy ruchów: ruchy zmieniające zbiór wierzchołków i ruchy wewnątrztrasowe, które jedynie zmieniają kolejność wierzchołków na trasie.
+
+Jako ruch zmieniający zbiór wierzchołków wykorzystujemy wymianę dwóch wierzchołków, z których jeden jest w trasie, a drugi po nią. 
+
+Stosujemy dwa rodzaje ruchów wewnątrztrasowych (jeden albo drugi, stąd dwa rodzaje sąsiedztwa). jeden to wymiana dwóch wierzchołków wchodzących w skład trasy, drugi to wymiana dwóch krawędzi.
+
+Implementacja musi wykorzystywać obliczanie delty funkcji celu.
+
+Sąsiedztwo składa się więc z ruchów dwóch typów. W wersji stromej przeglądamy wszystkie ruchy obu typów i wybieramy najlepszy. W wersji zachłannej (greedy) należy zrandomizować kolejność przeglądania. Np. w pętli po wierzchołkach, można losować wierzchołek startowy i kierunek pętli. Należy też losować kolejność przeglądania ruchów wewnątrztrasowych i zmieniających zbiór wierzchołków. W sprawozdaniu proszę opisać sposób randomizacji.
+
+Jako punkt odniesienia implementujemy algorytm losowego przeszukiwania. W pętli generujemy losowe rozwiązania i zwracamy najlepsze z nich. Algorytm uruchamiamy na czas taki jak średni czas najwolniejszej wersji lokalnego przeszukiwania.
+
+Każdy algorytm na każdej instancji uruchamiany 100 razy startując z rozwiązań losowych i raportujemy wartości min, max i średnią dla funkcji celu i czasu. Wszystkie wyniki zbieramy w jednej tabeli.
+
+Poza tym zawartość sprawozdania podobnie jako poprzednio. Pseudokody algorytmów, wyniki liczbowe i wizualizacje najlepszych rozwiązań, wnioski, link do kodu.  

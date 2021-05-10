@@ -1,0 +1,19 @@
+Należy zaimplementować trzy metody:
+
+- (MSLS) Multiple start local search – Lokalne przeszukiwanie z różnych losowych punktów startowych,
+
+- (ILS1) Iterated local search - Iteracyjne przeszukiwanie lokalne z niewielką perturbacją,
+
+- (ILS2) Iterated local search - Iteracyjne przeszukiwanie lokalne z Large-scale neighborhood search, tj. większą perturbacją typu Destroy-Repair.
+
+Każda grupa samodzielnie wybiera wersję lokalnego przeszukiwania (steepest lub greedy, z usprawnieniami efektywnościowymi lub bez), ale we wszystkich metodach stosujemy tę samą wersję lokalnego przeszukiwania.
+
+W obu wypadkach szczegółowe perturbacje należy zaproponować samodzielnie i opisać je w sprawozdaniu. Nalezy jednak dążyć do tego, aby metody ILSx dawały wyniki lepsze niż MSLS.
+
+Perturbacja1 (ILS1) może polegać np. na wymianie kilku krawędzi i/lub wierzchołków na inne wybrane losowo.
+
+Perturbacja2 (ILS2) powinna polegać na usunięciu większej liczby krawędzi i wierzchołków (np. 20%) (destroy) i naprawieniu rozwiązania nie losowo, ale za pomocą metody heurystycznej (jednej z tych zaimplementowanych na  pierwszych zajęciach). Metodą ILS2 implementujemy także w wersji bez wykorzystania lokalnego przeszukiwania (ILS2a).
+
+Każdą z metod uruchamiany 10 razy. W ramach MSLS wykonujemy 100 iteracji lokalnego przeszukiwania). W przypadku ILSx warunkiem stopu jest osiągnięcie czasu równego średniemu czasowi MSLS dla tej samej instancji.
+
+Eksperymenty wykonujemy na instancjach kroa200 i krob200. Raportujemy dane analogiczne jak w poprzednich eksperymentach. Uwaga, jedno uruchomienie MSLS obejmuje 100 iteracji LS, a wynikiem końcowym jest najlepsze uzyskane w tych 100 przebiegach rozwiązanie. Podajmy wyniki min, max i śr dla 10 uruchomień MSLS. Oprócz tego dla metod ILSx podajemy min, max i śr dla liczby uruchomień lokalnego przeszukiwania.
