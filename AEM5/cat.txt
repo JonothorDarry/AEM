@@ -1,0 +1,7 @@
+Celem jest implementacja hybrydowego algorytmu ewolucyjnego i porównanie go z metodami MSLS i ILSx zaimplementowanymi w poprzednim zadaniu.
+
+Proponowany parametry algorytmu: populacja elitarna o wielkości 20, algorytm steady state, w populacji nie mogą się znajdować kopie tego samego rozwiązania.
+
+Proponowany operator rekombinacji: Wyszukujemy wszystkie wspólne podścieżki w obu rodzicach. Podścieżka może być pojedynczym wierzchołkiem, pojedynczą krawędzią, lub zbiorem połączonych krawędzi. Jeżeli suma wierzchołków we wspólnych podścieżakch jest mniejsza niż zadana liczba wierzchołków, to dodajemy losowo wierzchołki, które należały do jednego z rodziców. Podścieżki łączymy w sposób losowy, tak aby powstał cykl hamiltona.
+
+Parametry eksperymentu i dane do sprawozdania takie same jak w przypadku ILSx. 
