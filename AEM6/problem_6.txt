@@ -1,0 +1,11 @@
+1. Testy globalnej wypukłości.
+
+Należy wygenerować dla każdej instancji 1000 losowych optimów lokalnych, tj. rozwiązań uzyskanych z losowych rozwiązań startowych po zastosowaniu lokalnego przeszukiwania w wersji zachłannej. Następnie dla każdego z tych rozwiązań nalezy policzyć podobieństwo do najlepszego rozwiązania (można wziąć najlepsze rozwiązanie spośród tego 1000 lub najlepsze wygenerowane dowolną metodą) i średnie podobieństwo dla wszystkich pozostałych rozwiązań. Na osi x nanosimy wartość funkcji celu, na y (średnie) podobieństwo. Liczymy też wartość współczynnika korelacji.
+
+Stosujemy dwie miary podobieństwa (oddzielnie):
+
+- Liczba wspólnych wierzchołków wybranych do rozwiązania.
+
+- Liczba wspólnych krawędzi.
+
+2. Próba poprawy zaimplementowanych wcześniej algorytmów. Należy zaproponować dowolną modyfikację zaimplementowanych wcześniej algorytmów, która pozwoli poprawić średni wynik i najlepszy wynik  uzyskany we wcześniejszych eksperymentach (na obu instancjach) w tym samym czasie. Nowy algorytm należy dokładnie opisać.
